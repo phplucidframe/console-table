@@ -3,7 +3,7 @@
  * This file is part of the PHPLucidFrame library.
  * The class makes you easy to build console style tables
  *
- * @package     LucidFrame\Console
+ * @package     PHPLucidFrame\Console
  * @since       PHPLucidFrame v 1.12.0
  * @copyright   Copyright (c), PHPLucidFrame.
  * @author      Sithu K. <cithukyaw@gmail.com>
