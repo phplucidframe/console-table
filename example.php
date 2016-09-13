@@ -1,5 +1,9 @@
 <?php
-include 'ConsoleTable.php';
+
+// include 'ConsoleTable.php';
+
+$loader = require 'vendor/autoload.php';
+$loader->add('LucidFrame', __DIR__.'/src/');
 
 use LucidFrame\Console\ConsoleTable;
 
