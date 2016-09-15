@@ -6,7 +6,7 @@ License: MIT
 
 ## Example 1: Bordered Table (Default)
 
-    require "vendor/autoload.php";
+    require 'src/LucidFrame/Console/ConsoleTable.php';
 
     $table = new LucidFrame\Console\ConsoleTable();
     $table
@@ -40,7 +40,7 @@ You can also print the table using `getTable` method such as `echo $table->getTa
 
 You can also use `setHeaders()` and `addRow` with Arrays.
 
-    require "vendor/autoload.php";
+    require 'src/LucidFrame/Console/ConsoleTable.php';
 
     $table = new LucidFrame\Console\ConsoleTable();
     $table
@@ -64,7 +64,7 @@ You can also use `setHeaders()` and `addRow` with Arrays.
 
 ## Example 3: Bordered Table with Left Margin Width 4
 
-    require "vendor/autoload.php";
+    require 'src/LucidFrame/Console/ConsoleTable.php';
 
     $table = new LucidFrame\Console\ConsoleTable();
     $table
@@ -88,7 +88,7 @@ You can also use `setHeaders()` and `addRow` with Arrays.
 
 ## Example 4: Non-bordered Table with Header
 
-    require "vendor/autoload.php";
+    require 'src/LucidFrame/Console/ConsoleTable.php';
 
     $table = new LucidFrame\Console\ConsoleTable();
     $table
@@ -110,7 +110,7 @@ You can also use `setHeaders()` and `addRow` with Arrays.
 
 ## Example 5: Non-bordered Table without Header
 
-    require "vendor/autoload.php";
+    require 'src/LucidFrame/Console/ConsoleTable.php';
 
     $table = new LucidFrame\Console\ConsoleTable();
     $table
