@@ -1,0 +1,22 @@
+{
+    "name": "phplucidframe/console-table",
+    "description": "Console Table",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sithu K.",
+            "email": "cithukyaw@gmail.com"
+        }
+    ],
+    "require":{
+        "php": ">=5.3"
+    },
+    "require-dev":{
+        "phpunit/phpunit":"*"
+    },
+    "autoload": {
+        "psr-0": { 
+            "LucidFrame\\": "src/"
+        }
+    }
+}

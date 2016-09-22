@@ -1,5 +1,6 @@
 <?php
-include 'ConsoleTable.php';
+
+require 'src/LucidFrame/Console/ConsoleTable.php';
 
 use LucidFrame\Console\ConsoleTable;
 
