@@ -185,6 +185,10 @@ class ConsoleTable
         }
         $output .= $this->border ? $this->getBorderLine() : '';
 
+        if (PHP_SAPI !== 'cli') {
+            $output = '<pre>'.$output.'</pre>';
+        }
+
         return $output;
     }
 

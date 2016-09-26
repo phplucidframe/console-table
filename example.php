@@ -15,10 +15,6 @@ function _pr($string)
     }
 }
 
-if (PHP_SAPI !== 'cli') {
-    echo '<pre>';
-}
-
 _pr('Bordered Table (Default)');
 
 $table = new ConsoleTable();
