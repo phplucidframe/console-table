@@ -4,6 +4,10 @@
 
 License: MIT
 
+## Composer Installation
+
+    composer require phplucidframe/console-table
+
 ## Example 1: Bordered Table (Default)
 
     require 'src/LucidFrame/Console/ConsoleTable.php';
