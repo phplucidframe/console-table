@@ -1,8 +1,11 @@
 <?php
 
-use LucidFrame\Console\ConsoleTable;
+namespace LucidFrameTest\Console\ConsoleTable;
 
-class ConsoleTableTest extends PHPUnit_Framework_TestCase
+use LucidFrame\Console\ConsoleTable;
+use PHPUnit\Framework\TestCase;
+
+class ConsoleTableTest extends TestCase
 {
     public function testBorderedTableDefault()
     {
@@ -45,7 +48,7 @@ class ConsoleTableTest extends PHPUnit_Framework_TestCase
 
         $table = new ConsoleTable();
         $table
-            ->setHeaders(array('Language', 'Year'))
+            ->addHeaders(array('Language', 'Year'))
             ->addRow(array('PHP', 1994))
             ->addRow(array('C++', 1983))
             ->addRow(array('C', 1970))
@@ -68,7 +71,7 @@ class ConsoleTableTest extends PHPUnit_Framework_TestCase
 
         $table = new ConsoleTable();
         $table
-            ->setHeaders(array('Language', 'Year'))
+            ->addHeaders(array('Language', 'Year'))
             ->addRow(array('PHP', 1994))
             ->addRow(array('C++', 1983))
             ->addRow(array('C', 1970))
@@ -88,7 +91,7 @@ class ConsoleTableTest extends PHPUnit_Framework_TestCase
 
         $table = new ConsoleTable();
         $table
-            ->setHeaders(array('Language', 'Year'))
+            ->addHeaders(array('Language', 'Year'))
             ->addRow(array('PHP', 1994))
             ->addRow(array('C++', 1983))
             ->addRow(array('C', 1970))
@@ -112,5 +115,70 @@ class ConsoleTableTest extends PHPUnit_Framework_TestCase
             ->hideBorder();
 
         $this->assertEquals(trim($nonBorderedTableWithoutHeader), trim($table->getTable()));
+    }
+
+    public function testAddHeaders()
+    {
+        $borderedTableDefault = '
++----------+------+
+| Language | Year |
++----------+------+
+| PHP      | 1994 |
++----------+------+';
+
+        $table = new ConsoleTable();
+        $table
+            ->addHeaders(['Language', 'Year'])
+            ->addRow()
+            ->addColumn('PHP')
+            ->addColumn(1994);
+
+        $this->assertEquals(trim($borderedTableDefault), trim($table->getTable()));
+    }
+
+    public function testAddHorizontalLine()
+    {
+        $expectedTable = '
++----------+------+
+| Language | Year |
++----------+------+
+| PHP      | 1994 |
+| C++      | 1983 |
++----------+------+
+|          | 0011 |
++----------+------+';
+
+        $table = new ConsoleTable();
+        $table
+            ->addHeaders(['Language', 'Year'])
+            ->addRow(array('PHP',1994))
+            ->addRow(array('C++', 1983))
+            ->addHorizontalLine()
+            ->addRow(['','0011']);
+
+        $this->assertEquals(trim($expectedTable), trim($table->getTable()));
+    }
+
+
+    public function testAddHorizontalLineWhenBordersAreHidden()
+    {
+        $expectedTable = '
+Language  Year 
+----------------
+ PHP       1994 
+ C++       1983 
+----------------
+           0011';
+
+        $table = new ConsoleTable();
+        $table
+            ->addHeaders(['Language', 'Year'])
+            ->addRow(array('PHP',1994))
+            ->addRow(array('C++', 1983))
+            ->addHorizontalLine()
+            ->addRow(['','0011'])
+            ->hideBorder();
+
+        $this->assertEquals(trim($expectedTable), trim($table->getTable()));
     }
 }
