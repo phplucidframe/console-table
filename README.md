@@ -131,6 +131,44 @@ You can also use `setHeaders()` and `addRow` with Arrays.
      C++  1983
      C    1970
 
+## Example 6: Table with all borders
+
+    require 'src/LucidFrame/Console/ConsoleTable.php';
+
+    $table = new LucidFrame\Console\ConsoleTable();
+    $table
+        ->setHeaders(array('Language', 'Year'))
+        ->addRow(array('PHP', 1994))
+        ->addRow(array('C++', 1983))
+        ->addRow(array('C', 1970))
+        ->showAllBorders()
+        ->display()
+    ;
+
+Alternatively, you can use `addBorderLine()` for each row.
+
+    $table
+        ->setHeaders(array('Language', 'Year'))
+        ->addRow(array('PHP', 1994))
+        ->addBorderLine()
+        ->addRow(array('C++', 1983))
+        ->addBorderLine()
+        ->addRow(array('C', 1970))
+        ->display()
+    ;
+
+**Output**
+
+    +----------+------+
+    | Language | Year |
+    +----------+------+
+    | PHP      | 1994 |
+    +----------+------+
+    | C++      | 1983 |
+    +----------+------+
+    | C        | 1970 |
+    +----------+------+
+
 ## Test
 
 If you have [PHPUnit](https://phpunit.de/manual/current/en/installation.html) installed in your machine, you can run test at your project root. 

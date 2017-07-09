@@ -25,6 +25,8 @@ class ConsoleTable
     protected $data = array();
     /** @var boolean Border shown or not */
     protected $border = true;
+    /** @var boolean All borders shown or not */
+    protected $allBorders = false;
     /** @var integer Table padding */
     protected $padding = 1;
     /** @var integer Table left margin */
@@ -33,13 +35,6 @@ class ConsoleTable
     private $rowIndex = -1;
     /** @var array */
     private $columnWidths = array();
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * Adds a column to the table header
@@ -133,6 +128,18 @@ class ConsoleTable
     }
 
     /**
+     * Show all table borders
+     * @return object LucidFrame\Console\ConsoleTable
+     */
+    public function showAllBorders()
+    {
+        $this->showBorder();
+        $this->allBorders = true;
+
+        return $this;
+    }
+
+    /**
      * Set padding for each cell
      * @param  integer $value The integer value, defaults to 1
      * @return object LucidFrame\Console\ConsoleTable
@@ -188,7 +195,11 @@ class ConsoleTable
         $output = $this->border ? $this->getBorderLine() : '';
         foreach ($this->data as $y => $row) {
             if ($row === self::HR) {
-                $output .= $this->getBorderLine();
+                if (!$this->allBorders) {
+                    $output .= $this->getBorderLine();
+                    unset($this->data[$y]);
+                }
+
                 continue;
             }
 
@@ -199,9 +210,16 @@ class ConsoleTable
 
             if ($y === self::HEADER_INDEX) {
                 $output .= $this->getBorderLine();
+            } else {
+                if ($this->allBorders) {
+                    $output .= $this->getBorderLine();
+                }
             }
         }
-        $output .= $this->border ? $this->getBorderLine() : '';
+
+        if (!$this->allBorders) {
+            $output .= $this->border ? $this->getBorderLine() : '';
+        }
 
         if (PHP_SAPI !== 'cli') {
             $output = '<pre>'.$output.'</pre>';

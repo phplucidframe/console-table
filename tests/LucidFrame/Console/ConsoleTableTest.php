@@ -60,6 +60,30 @@ class ConsoleTableTest extends TestCase
         $this->assertEquals(trim($borderedTableWithHorizontalLines), trim($table->getTable()));
     }
 
+    public function testBorderedTableWithHorizontalLinesUsingShowAllBorders()
+    {
+        $borderedTableWithHorizontalLines = '
++----------+------+
+| Language | Year |
++----------+------+
+| PHP      | 1994 |
++----------+------+
+| C++      | 1983 |
++----------+------+
+| C        | 1970 |
++----------+------+';
+
+        $table = new ConsoleTable();
+        $table
+            ->setHeaders(array('Language', 'Year'))
+            ->addRow(array('PHP', 1994))
+            ->addRow(array('C++', 1983))
+            ->addRow(array('C', 1970))
+            ->showAllBorders();
+
+        $this->assertEquals(trim($borderedTableWithHorizontalLines), trim($table->getTable()));
+    }
+
     public function testBorderedTableWithPaddingWidth2()
     {
         $borderedTableWithPaddingWidth2 = '
