@@ -177,7 +177,7 @@ class ConsoleTable
             foreach ($row as $x => $cell) {
                 $output .= $this->getCellOutput($x, $row);
             }
-            $output .= "\n";
+            $output .= PHP_EOL;
 
             if ($y === self::HEADER_INDEX) {
                 $output .= $this->getBorderLine();
@@ -207,7 +207,7 @@ class ConsoleTable
         if ($this->border) {
             $output .= '+';
         }
-        $output .= "\n";
+        $output .= PHP_EOL;
 
         return $output;
     }

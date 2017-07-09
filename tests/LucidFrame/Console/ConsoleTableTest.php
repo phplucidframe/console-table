@@ -1,8 +1,11 @@
 <?php
 
-use LucidFrame\Console\ConsoleTable;
+namespace LucidFrameTest\Console\ConsoleTable;
 
-class ConsoleTableTest extends PHPUnit_Framework_TestCase
+use LucidFrame\Console\ConsoleTable;
+use PHPUnit\Framework\TestCase;
+
+class ConsoleTableTest extends TestCase
 {
     public function testBorderedTableDefault()
     {
@@ -63,8 +66,7 @@ class ConsoleTableTest extends PHPUnit_Framework_TestCase
     | PHP      | 1994 |
     | C++      | 1983 |
     | C        | 1970 |
-    +----------+------+
-';
+    +----------+------+';
 
         $table = new ConsoleTable();
         $table
@@ -74,7 +76,7 @@ class ConsoleTableTest extends PHPUnit_Framework_TestCase
             ->addRow(array('C', 1970))
             ->setIndent(4);
 
-        $this->assertEquals($borderedTableWithLeftMarginWidth4, sprintf("\n%s", $table->getTable()));
+        $this->assertEquals(trim($borderedTableWithLeftMarginWidth4), trim($table->getTable()));
     }
 
     public function testNonBorderedTableWithHeader()
