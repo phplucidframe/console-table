@@ -2,7 +2,7 @@
 
 **ConsoleTabe** makes you easy to build console style tables. It helps you to display tabular data in terminal/shell. This is a component of [PHPLucidFrame](https://github.com/phplucidframe/phplucidframe).
 
-License: MIT
+License: [MIT](https://opensource.org/licenses/MIT)
 
 ## Composer Installation
 
@@ -130,3 +130,14 @@ You can also use `setHeaders()` and `addRow` with Arrays.
      PHP  1994
      C++  1983
      C    1970
+
+## Test
+
+If you have [PHPUnit](https://phpunit.de/manual/current/en/installation.html) installed in your machine, you can run test at your project root. 
+
+    composer install
+    phpunit tests
+
+If you don't have PHPUnit, you can simply run this in your terminal.
+
+    php example.php
