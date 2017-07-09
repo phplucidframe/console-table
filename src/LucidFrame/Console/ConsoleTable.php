@@ -19,18 +19,19 @@ namespace LucidFrame\Console;
 class ConsoleTable
 {
     const HEADER_INDEX = -1;
+    const HR = 'HR';
 
-    /** @var array Array of table data **/
+    /** @var array Array of table data */
     protected $data = array();
-    /** @var boolean Border shown or not **/
+    /** @var boolean Border shown or not */
     protected $border = true;
-    /** @var integer Table padding **/
+    /** @var integer Table padding */
     protected $padding = 1;
-    /** @var integer Table left margin **/
+    /** @var integer Table left margin */
     protected $indent = 0;
-    /** @var integer **/
+    /** @var integer */
     private $rowIndex = -1;
-    /** @var array **/
+    /** @var array */
     private $columnWidths = array();
 
     /**
@@ -53,7 +54,7 @@ class ConsoleTable
     }
 
     /**
-     * Adds the headers for the columns
+     * Set headers for the columns in one-line
      * @param  array  Array of header cell content
      * @return object LucidFrame\Console\ConsoleTable
      */
@@ -77,7 +78,7 @@ class ConsoleTable
      * @param  array  $data The row data to add
      * @return object LucidFrame\Console\ConsoleTable
      */
-    public function addRow($data = null)
+    public function addRow(array $data = null)
     {
         $this->rowIndex++;
 
@@ -156,6 +157,18 @@ class ConsoleTable
     }
 
     /**
+     * Add horizontal border line
+     * @return object LucidFrame\Console\ConsoleTable
+     */
+    public function addBorderLine()
+    {
+        $this->rowIndex++;
+        $this->data[$this->rowIndex] = self::HR;
+
+        return $this;
+    }
+
+    /**
      * Print the table
      * @return void
      */
@@ -174,10 +187,15 @@ class ConsoleTable
 
         $output = $this->border ? $this->getBorderLine() : '';
         foreach ($this->data as $y => $row) {
+            if ($row === self::HR) {
+                $output .= $this->getBorderLine();
+                continue;
+            }
+
             foreach ($row as $x => $cell) {
                 $output .= $this->getCellOutput($x, $row);
             }
-            $output .= "\n";
+            $output .= PHP_EOL;
 
             if ($y === self::HEADER_INDEX) {
                 $output .= $this->getBorderLine();
@@ -207,7 +225,7 @@ class ConsoleTable
         if ($this->border) {
             $output .= '+';
         }
-        $output .= "\n";
+        $output .= PHP_EOL;
 
         return $output;
     }
@@ -252,12 +270,14 @@ class ConsoleTable
     private function calculateColumnWidth()
     {
         foreach ($this->data as $y => $row) {
-            foreach ($row as $x => $col) {
-                if (!isset($this->columnWidths[$x])) {
-                    $this->columnWidths[$x] = strlen($col);
-                } else {
-                    if (strlen($col) > $this->columnWidths[$x]) {
+            if (is_array($row)) {
+                foreach ($row as $x => $col) {
+                    if (!isset($this->columnWidths[$x])) {
                         $this->columnWidths[$x] = strlen($col);
+                    } else {
+                        if (strlen($col) > $this->columnWidths[$x]) {
+                            $this->columnWidths[$x] = strlen($col);
+                        }
                     }
                 }
             }

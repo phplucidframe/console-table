@@ -33,6 +33,19 @@ $table
     ->display()
 ;
 
+_pr('Bordered Table with Horizontal Lines');
+
+$table = new ConsoleTable();
+$table
+    ->setHeaders(array('Language', 'Year'))
+    ->addRow(array('PHP', 1994))
+    ->addBorderLine()
+    ->addRow(array('C++', 1983))
+    ->addBorderLine()
+    ->addRow(array('C', 1970))
+    ->display()
+;
+
 _pr('Bordered Table with Padding Width 2');
 
 $table = new ConsoleTable();
