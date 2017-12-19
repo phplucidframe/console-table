@@ -290,11 +290,12 @@ class ConsoleTable
         foreach ($this->data as $y => $row) {
             if (is_array($row)) {
                 foreach ($row as $x => $col) {
+                    $content = preg_replace('#\x1b[[][^A-Za-z]*[A-Za-z]#', '', $col);
                     if (!isset($this->columnWidths[$x])) {
-                        $this->columnWidths[$x] = strlen($col);
+                        $this->columnWidths[$x] = strlen($content);
                     } else {
                         if (strlen($col) > $this->columnWidths[$x]) {
-                            $this->columnWidths[$x] = strlen($col);
+                            $this->columnWidths[$x] = strlen($content);
                         }
                     }
                 }
