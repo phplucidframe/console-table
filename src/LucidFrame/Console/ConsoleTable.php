@@ -274,7 +274,7 @@ class ConsoleTable
         $output .= $padding; # left padding
         $output .= str_pad($cell, $width, $row ? ' ' : '-'); # cell content
         $output .= $padding; # right padding
-        if ($index == count($row)-1 && $this->border) {
+        if ($row && $index == count($row)-1 && $this->border) {
             $output .= $row ? '|' : '+';
         }
 
