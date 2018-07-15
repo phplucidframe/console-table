@@ -272,7 +272,9 @@ class ConsoleTable
         }
 
         $output .= $padding; # left padding
-        $output .= str_pad($cell, $width, $row ? ' ' : '-'); # cell content
+        $cell_content = preg_replace('#\x1b[[][^A-Za-z]*[A-Za-z]#', '', $cell);
+        $delta = strlen($cell) - strlen($cell_content);
+        $output .= str_pad($cell, $width + $delta, $row ? ' ' : '-'); # cell content
         $output .= $padding; # right padding
         if ($row && $index == count($row)-1 && $this->border) {
             $output .= $row ? '|' : '+';
@@ -294,7 +296,7 @@ class ConsoleTable
                     if (!isset($this->columnWidths[$x])) {
                         $this->columnWidths[$x] = strlen($content);
                     } else {
-                        if (strlen($col) > $this->columnWidths[$x]) {
+                        if (strlen($content) > $this->columnWidths[$x]) {
                             $this->columnWidths[$x] = strlen($content);
                         }
                     }
