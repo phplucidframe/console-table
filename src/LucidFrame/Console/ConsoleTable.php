@@ -235,7 +235,15 @@ class ConsoleTable
     private function getBorderLine()
     {
         $output = '';
-        $columnCount = count($this->data[0]);
+
+        if (isset($this->data[0])) {
+            $columnCount = count($this->data[0]);
+        } elseif (isset($this->data[self::HEADER_INDEX])) {
+            $columnCount = count($this->data[self::HEADER_INDEX]);
+        } else {
+            return $output;
+        }
+
         for ($col = 0; $col < $columnCount; $col++) {
             $output .= $this->getCellOutput($col);
         }
