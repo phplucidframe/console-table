@@ -280,8 +280,9 @@ class ConsoleTable
         }
 
         $output .= $padding; # left padding
-        $cell_content = preg_replace('#\x1b[[][^A-Za-z]*[A-Za-z]#', '', $cell);
-        $delta = strlen($cell) - strlen($cell_content);
+        $cell    = trim(preg_replace('/\s+/', ' ', $cell)); # remove line breaks
+        $content = preg_replace('#\x1b[[][^A-Za-z]*[A-Za-z]#', '', $cell);
+        $delta   = strlen($cell) - strlen($content);
         $output .= str_pad($cell, $width + $delta, $row ? ' ' : '-'); # cell content
         $output .= $padding; # right padding
         if ($row && $index == count($row)-1 && $this->border) {
