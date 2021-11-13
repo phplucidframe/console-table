@@ -35,6 +35,8 @@ class ConsoleTable
     private $rowIndex = -1;
     /** @var array */
     private $columnWidths = array();
+    /** @var int */
+    private $maxColumnCount = 0;
 
     /**
      * Adds a column to the table header
@@ -81,6 +83,8 @@ class ConsoleTable
             foreach ($data as $col => $content) {
                 $this->data[$this->rowIndex][$col] = $content;
             }
+
+            $this->setMaxColumnCount(count($this->data[$this->rowIndex]));
         }
 
         return $this;
@@ -101,6 +105,7 @@ class ConsoleTable
         }
 
         $this->data[$row][$col] = $content;
+        $this->setMaxColumnCount(count($this->data[$row]));
 
         return $this;
     }
@@ -203,6 +208,10 @@ class ConsoleTable
                 continue;
             }
 
+            if ($y === self::HEADER_INDEX && count($row) < $this->maxColumnCount) {
+                $row = $row + array_fill(count($row), $this->maxColumnCount - count($row), ' ');
+            }
+
             foreach ($row as $x => $cell) {
                 $output .= $this->getCellOutput($x, $row);
             }
@@ -267,7 +276,6 @@ class ConsoleTable
     {
         $cell       = $row ? $row[$index] : '-';
         $width      = $this->columnWidths[$index];
-        $pad        = $row ? $width - mb_strlen($cell, 'UTF-8') : $width;
         $padding    = str_repeat($row ? ' ' : '-', $this->padding);
 
         $output = '';
@@ -299,7 +307,7 @@ class ConsoleTable
      */
     private function calculateColumnWidth()
     {
-        foreach ($this->data as $y => $row) {
+        foreach ($this->data as $row) {
             if (is_array($row)) {
                 foreach ($row as $x => $col) {
                     $content = preg_replace('#\x1b[[][^A-Za-z]*[A-Za-z]#', '', $col);
@@ -351,5 +359,16 @@ class ConsoleTable
         }
 
         return $result;
+    }
+
+    /**
+     * Set max column count
+     * @param int $count The column count
+     */
+    private function setMaxColumnCount($count)
+    {
+        if ($count > $this->maxColumnCount) {
+            $this->maxColumnCount = $count;
+        }
     }
 }
