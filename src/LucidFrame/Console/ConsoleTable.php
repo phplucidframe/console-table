@@ -7,7 +7,7 @@
  * @since       PHPLucidFrame v 1.12.0
  * @copyright   Copyright (c), PHPLucidFrame.
  * @author      Sithu K. <cithukyaw@gmail.com>
- * @link        http://phplucidframe.github.io
+ * @link        http://phplucidframe.com
  * @license     http://www.opensource.org/licenses/mit-license.php MIT License
  *
  * This source file is subject to the MIT license that is bundled
@@ -16,6 +16,9 @@
 
 namespace LucidFrame\Console;
 
+/**
+ * The class makes you easy to build console style tables
+ */
 class ConsoleTable
 {
     const HEADER_INDEX = -1;
