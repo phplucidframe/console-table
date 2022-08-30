@@ -4,8 +4,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Sithu K.",
-            "email": "cithukyaw@gmail.com"
+            "name": "Sithu",
+            "email": "sithu@phplucidframe.com"
         }
     ],
     "require":{
@@ -15,7 +15,7 @@
         "phpunit/phpunit":"*"
     },
     "autoload": {
-        "psr-0": { 
+        "psr-0": {
             "LucidFrame\\": "src/",
             "LucidFrameTest\\": "tests/"
         }

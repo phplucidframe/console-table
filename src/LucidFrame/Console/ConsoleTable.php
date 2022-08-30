@@ -6,7 +6,7 @@
  * @package     PHPLucidFrame\Console
  * @since       PHPLucidFrame v 1.12.0
  * @copyright   Copyright (c), PHPLucidFrame.
- * @author      Sithu K. <cithukyaw@gmail.com>
+ * @author      Sithu <sithu@phplucidframe.com>
  * @link        http://phplucidframe.com
  * @license     http://www.opensource.org/licenses/mit-license.php MIT License
  *
