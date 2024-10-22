@@ -104,3 +104,20 @@ $table
     ->hideBorder()
     ->display()
 ;
+
+_pr('Table with Some Emojis');
+# addressing the issue https://github.com/phplucidframe/console-table/issues/15
+$table = new ConsoleTable();
+$table
+    ->addHeader('A')
+    ->addHeader('B')
+    ->addHeader('C')
+    ->addRow()
+        ->addColumn('📚')
+        ->addColumn('Hello 👋')
+        ->addColumn('Nice')
+    ->addRow()
+        ->addColumn('X')
+        ->addColumn('Hello 👋, how are you 😊?')
+        ->addColumn('OK')
+    ->display();
