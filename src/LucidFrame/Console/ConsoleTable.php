@@ -275,12 +275,10 @@ class ConsoleTable
      * @param array   $row   The table row
      * @return string
      */
-    private function getCellOutput($index, $row = null)
+    private function getCellOutput($index, $row = [])
     {
-        $cell       = $row ? $row[$index] : '-';
-        $width      = $this->columnWidths[$index];
-        $padding    = str_repeat($row ? ' ' : '-', $this->padding);
-
+        $cell = $row ? $row[$index] : '-';
+        $padding = str_repeat($row ? ' ' : '-', $this->padding);
         $output = '';
 
         if ($index === 0) {
@@ -292,16 +290,37 @@ class ConsoleTable
         }
 
         $output .= $padding; # left padding
-        $cell    = trim(preg_replace('/\s+/', ' ', $cell)); # remove line breaks
-        $content = preg_replace('#\x1b[[][^A-Za-z]*[A-Za-z]#', '', $cell);
-        $delta   = mb_strlen($cell, 'UTF-8') - mb_strlen($content, 'UTF-8');
-        $output .= $this->strPadUnicode($cell, $width + $delta, $row ? ' ' : '-'); # cell content
+        $output .= $this->strPadUnicode($cell, $this->getVisualWidth($index, $cell), $row ? ' ' : '-'); # cell content
         $output .= $padding; # right padding
-        if ($row && $index == count($row) - 1 && $this->border) {
+        if ($index == count($row) - 1 && $this->border) {
             $output .= $row ? '|' : '+';
         }
 
         return $output;
+    }
+
+    /**
+     * Get the visual width of the cell after the removal of invisible ANSI sequences.
+     *
+     * @param int $index The column index
+     * @param string $content The cell content
+     * @return int|mixed
+     */
+    private function getVisualWidth($index, $content)
+    {
+        $colWidth = $this->columnWidths[$index];
+        # removes line breaks, tabs, and extra spaces
+        $cell = trim(preg_replace('/\s+/', ' ', $content));
+        # removes ANSI escape sequences (commonly used for terminal text color and formatting)
+        $cleanContent = $this->clearTextFormatting($cell);
+
+        $originalContentLen = mb_strlen($cell, 'UTF-8');
+        $cleanContentLen = mb_strlen($cleanContent, 'UTF-8');
+
+        # calculate the number of characters removed (i.e., length of the ANSI sequences).
+        $delta = $originalContentLen - $cleanContentLen;
+
+        return $colWidth + $delta;
     }
 
     /**
@@ -312,13 +331,15 @@ class ConsoleTable
     {
         foreach ($this->data as $row) {
             if (is_array($row)) {
-                foreach ($row as $x => $col) {
-                    $content = preg_replace('#\x1b[[][^A-Za-z]*[A-Za-z]#', '', $col);
+                foreach ($row as $x => $cell) {
+                    $content = $this->clearTextFormatting($cell);
+                    $colWidth = mb_strlen($content, 'UTF-8');
+
                     if (!isset($this->columnWidths[$x])) {
-                        $this->columnWidths[$x] = mb_strlen($content, 'UTF-8');
+                        $this->columnWidths[$x] = $colWidth;
                     } else {
-                        if (mb_strlen($content, 'UTF-8') > $this->columnWidths[$x]) {
-                            $this->columnWidths[$x] = mb_strlen($content, 'UTF-8');
+                        if ($colWidth > $this->columnWidths[$x]) {
+                            $this->columnWidths[$x] = $colWidth;
                         }
                     }
                 }
@@ -373,5 +394,17 @@ class ConsoleTable
         if ($count > $this->maxColumnCount) {
             $this->maxColumnCount = $count;
         }
+    }
+
+    /**
+     * Remove ANSI escape codes (which are often used for terminal formatting) for plain text processing
+     * ANSI escape codes are often used to control text formatting in terminals (e.g., colors, boldness).
+     *
+     * @param string $content The cell content
+     * @return array|string|string[]|null
+     */
+    private function clearTextFormatting($content)
+    {
+        return preg_replace('#\x1b[[][^A-Za-z]*[A-Za-z]#', '', $content);
     }
 }
