@@ -78,7 +78,7 @@ class ConsoleTable
      * @param  array  $data The row data to add
      * @return object LucidFrame\Console\ConsoleTable
      */
-    public function addRow(array $data = null)
+    public function addRow(?array $data = null)
     {
         $this->rowIndex++;
 
