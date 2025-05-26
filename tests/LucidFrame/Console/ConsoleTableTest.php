@@ -164,4 +164,32 @@ class ConsoleTableTest extends TestCase
 
         $this->assertEquals(trim($nonBorderedTableWithoutHeader), trim($table->getTable()));
     }
+
+    public function testTableWithHeaderAlignment()
+    {
+        $tableWithHeaderAlignment = '
++---+---------------------+------+
+| A |                   B | C    |
++---+---------------------+------+
+| X |               Hello | Nice |
+| Y | Hello, how are you? |   OK |
++---+---------------------+------+';
+
+        $table = new ConsoleTable();
+        $table
+            ->addHeader('A')
+            ->addHeader('B', ConsoleTable::ALIGN_RIGHT)
+            ->addHeader('C')
+            ->addRow()
+                ->addColumn('X')
+                ->addColumn('Hello', null, null, ConsoleTable::ALIGN_RIGHT)
+                ->addColumn('Nice')
+            ->addRow()
+                ->addColumn('Y')
+                ->addColumn('Hello, how are you?')
+                ->addColumn('OK', null, null, ConsoleTable::ALIGN_RIGHT);
+
+
+        $this->assertEquals(trim($tableWithHeaderAlignment), trim($table->getTable()));
+    }
 }

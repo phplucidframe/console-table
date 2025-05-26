@@ -10,8 +10,6 @@ License: [MIT](https://opensource.org/licenses/MIT)
 
 ## Example 1: Bordered Table (Default)
 
-    require 'src/LucidFrame/Console/ConsoleTable.php';
-
     $table = new LucidFrame\Console\ConsoleTable();
     $table
         ->addHeader('Language')
@@ -44,8 +42,6 @@ You can also print the table using `getTable` method such as `echo $table->getTa
 
 You can also use `setHeaders()` and `addRow` with Arrays.
 
-    require 'src/LucidFrame/Console/ConsoleTable.php';
-
     $table = new LucidFrame\Console\ConsoleTable();
     $table
         ->setHeaders(array('Language', 'Year'))
@@ -67,8 +63,6 @@ You can also use `setHeaders()` and `addRow` with Arrays.
     +------------+--------+
 
 ## Example 3: Bordered Table with Left Margin Width 4
-
-    require 'src/LucidFrame/Console/ConsoleTable.php';
 
     $table = new LucidFrame\Console\ConsoleTable();
     $table
@@ -92,8 +86,6 @@ You can also use `setHeaders()` and `addRow` with Arrays.
 
 ## Example 4: Non-bordered Table with Header
 
-    require 'src/LucidFrame/Console/ConsoleTable.php';
-
     $table = new LucidFrame\Console\ConsoleTable();
     $table
         ->setHeaders(array('Language', 'Year'))
@@ -114,8 +106,6 @@ You can also use `setHeaders()` and `addRow` with Arrays.
 
 ## Example 5: Non-bordered Table without Header
 
-    require 'src/LucidFrame/Console/ConsoleTable.php';
-
     $table = new LucidFrame\Console\ConsoleTable();
     $table
         ->addRow(array('PHP', 1994))
@@ -132,8 +122,6 @@ You can also use `setHeaders()` and `addRow` with Arrays.
      C    1970
 
 ## Example 6: Table with all borders
-
-    require 'src/LucidFrame/Console/ConsoleTable.php';
 
     $table = new LucidFrame\Console\ConsoleTable();
     $table
@@ -169,13 +157,39 @@ Alternatively, you can use `addBorderLine()` for each row.
     | C        | 1970 |
     +----------+------+
 
+## Example 7: Table with Column Alignment
+
+    $table = new LucidFrame\Console\ConsoleTable();
+    $table
+        ->addHeader('A')
+        ->addHeader('B', ConsoleTable::ALIGN_RIGHT) # ALIGN_LEFT or ALIGN_RIGHT (ALIGN_LEFT is default)
+        ->addHeader('C')
+        ->addRow()
+            ->addColumn('X')
+            ->addColumn('Hello', null, null, ConsoleTable::ALIGN_RIGHT)
+            ->addColumn('Nice')
+        ->addRow()
+            ->addColumn('Y')
+            ->addColumn('Hello, how are you?')
+            ->addColumn('OK', null, null, ConsoleTable::ALIGN_RIGHT)
+        ->display();
+
+**Output**
+
+    +---+---------------------+------+
+    | A |                   B | C    |
+    +---+---------------------+------+
+    | X |               Hello | Nice |
+    | Y | Hello, how are you? |   OK |
+    +---+---------------------+------+
+
 ## Test
 
-If you have [PHPUnit](https://phpunit.de/manual/current/en/installation.html) installed in your machine, you can run test at your project root. 
+With PHPUnit, you can run this in your terminal.
 
     composer install
-    phpunit tests
+    vendor\bin\phpunit tests
 
-If you don't have PHPUnit, you can simply run this in your terminal.
+Without PHPUnit, you can simply run this in your terminal.
 
     php example.php

@@ -121,3 +121,20 @@ $table
         ->addColumn('Hello 👋, how are you 😊?')
         ->addColumn('OK')
     ->display();
+
+_pr('Table with Column Alignment');
+# addressing the issue https://github.com/phplucidframe/console-table/issues/19
+$table = new ConsoleTable();
+$table
+    ->addHeader('A')
+    ->addHeader('B', ConsoleTable::ALIGN_RIGHT) # ALIGN_LEFT or ALIGN_RIGHT (ALIGN_LEFT is default
+    ->addHeader('C')
+    ->addRow()
+        ->addColumn('X')
+        ->addColumn('Hello', null, null, ConsoleTable::ALIGN_RIGHT)
+        ->addColumn('Nice')
+    ->addRow()
+        ->addColumn('Y')
+        ->addColumn('Hello, how are you?')
+        ->addColumn('OK', null, null, ConsoleTable::ALIGN_RIGHT)
+    ->display();

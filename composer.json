@@ -16,7 +16,7 @@
         "phpunit/phpunit":"*"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "LucidFrame\\": "src/",
             "LucidFrameTest\\": "tests/"
         }
