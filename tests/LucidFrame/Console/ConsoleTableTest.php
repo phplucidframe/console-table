@@ -1,6 +1,6 @@
 <?php
 
-namespace LucidFrameTest\Console\ConsoleTable;
+namespace LucidFrameTest\LucidFrame\Console;
 
 use LucidFrame\Console\ConsoleTable;
 use PHPUnit\Framework\TestCase;
