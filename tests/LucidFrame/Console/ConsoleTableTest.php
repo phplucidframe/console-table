@@ -192,4 +192,53 @@ class ConsoleTableTest extends TestCase
 
         $this->assertEquals(trim($tableWithHeaderAlignment), trim($table->getTable()));
     }
+
+    public function testBorderedTableWithHeaderAndFooter()
+    {
+        $output = '
++-------+-----+
+| Name  | Age |
++-------+-----+
+| John  |  25 |
+| Jane  |  23 |
++-------+-----+
+| Total |  48 |
++-------+-----+';
+
+        $table = new ConsoleTable();
+        $table
+            ->addHeader('Name')
+            ->addHeader('Age')
+            ->addRow()
+                ->addColumn('John')
+                ->addColumn(25, null, null, ConsoleTable::ALIGN_RIGHT)
+            ->addRow()
+                ->addColumn('Jane')
+                ->addColumn(23, null, null, ConsoleTable::ALIGN_RIGHT)
+            ->addFooter('Total')
+            ->addFooter('48', ConsoleTable::ALIGN_RIGHT);
+
+        $this->assertEquals(trim($output), trim($table->getTable()));
+    }
+
+    public function testNonBorderedTableWithHeaderAndFooter()
+    {
+        $output = '
+ Name   Age 
+------------
+ John   25  
+ Jane   23  
+------------
+ Total  48  ';
+
+        $table = new ConsoleTable();
+        $table
+            ->setHeaders(array('Name', 'Age'))
+            ->addRow(array('John', 25))
+            ->addRow(array('Jane', 23))
+            ->setFooters(array('Total', 48))
+            ->hideBorder();
+
+        $this->assertEquals(trim($output), trim($table->getTable()));
+    }
 }

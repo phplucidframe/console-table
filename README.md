@@ -183,6 +183,53 @@ Alternatively, you can use `addBorderLine()` for each row.
     | Y | Hello, how are you? |   OK |
     +---+---------------------+------+
 
+# Example 8: Bordered Table with Header & Footer
+
+    $table = new LucidFrame\Console\ConsoleTable();
+    $table
+        ->addHeader('Name')
+        ->addHeader('Age')
+        ->addRow()
+            ->addColumn('John')
+            ->addColumn(25, null, null, ConsoleTable::ALIGN_RIGHT)
+        ->addRow()
+            ->addColumn('Jane')
+            ->addColumn(23, null, null, ConsoleTable::ALIGN_RIGHT)
+        ->addFooter('Total')
+        ->addFooter('48', ConsoleTable::ALIGN_RIGHT)
+        ->display();
+
+**Output**
+
+    +-------+-----+
+    | Name  | Age |
+    +-------+-----+
+    | John  |  25 |
+    | Jane  |  23 |
+    +-------+-----+
+    | Total |  48 |
+    +-------+-----+
+
+# Example 9: Non-bordered Table with Header & Footer
+
+    $table = new LucidFrame\Console\ConsoleTable();
+    $table
+        ->setHeaders(array('Name', 'Age'))
+        ->addRow(array('John', 25))
+        ->addRow(array('Jane', 23))
+        ->setFooters(array('Total', 48))
+        ->hideBorder()
+        ->display();
+
+**Output**
+
+    Name   Age 
+    -----------
+    John   25  
+    Jane   23  
+    -----------
+    Total  48  
+
 ## Test
 
 With PHPUnit, you can run this in your terminal.

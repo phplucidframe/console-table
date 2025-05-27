@@ -138,3 +138,29 @@ $table
         ->addColumn('Hello, how are you?')
         ->addColumn('OK', null, null, ConsoleTable::ALIGN_RIGHT)
     ->display();
+
+_pr('Bordered Table with Header & Footer');
+# addressing the issue https://github.com/phplucidframe/console-table/issues/20
+$table = new ConsoleTable();
+$table
+    ->addHeader('Name')
+    ->addHeader('Age')
+    ->addRow()
+        ->addColumn('John')
+        ->addColumn(25, null, null, ConsoleTable::ALIGN_RIGHT)
+    ->addRow()
+        ->addColumn('Jane')
+        ->addColumn(23, null, null, ConsoleTable::ALIGN_RIGHT)
+    ->addFooter('Total')
+    ->addFooter('48', ConsoleTable::ALIGN_RIGHT)
+    ->display();
+
+_pr('Non-bordered Table with Header & Footer');
+$table = new ConsoleTable();
+$table
+    ->setHeaders(array('Name', 'Age'))
+    ->addRow(array('John', 25))
+    ->addRow(array('Jane', 23))
+    ->setFooters(array('Total', 48))
+    ->hideBorder()
+    ->display();

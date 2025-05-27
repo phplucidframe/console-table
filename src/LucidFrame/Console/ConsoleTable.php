@@ -22,6 +22,7 @@ namespace LucidFrame\Console;
 class ConsoleTable
 {
     const HEADER_INDEX = -1;
+    const FOOTER_INDEX = -2;
     const HR = 'HR';
 
     const ALIGN_LEFT = 'left';
@@ -47,6 +48,8 @@ class ConsoleTable
     private $headerColumnAligns = [];
     /** @var array */
     private $columnAligns = [];
+    /** @var array */
+    private $footerColumnAligns = [];
 
     /**
      * Add a column to the table header
@@ -119,7 +122,7 @@ class ConsoleTable
 
         $this->data[$row][$col] = $content;
         $this->setMaxColumnCount(count($this->data[$row]));
-        
+
         // Set column alignment if specified
         if (!isset($this->columnAligns[$col]) && $align === self::ALIGN_RIGHT) {
             $this->columnAligns[$col] = STR_PAD_LEFT;
@@ -127,7 +130,7 @@ class ConsoleTable
 
         return $this;
     }
-    
+
     /**
      * Set alignment for a specific column
      * @param  integer $col   The column index
@@ -212,6 +215,40 @@ class ConsoleTable
     }
 
     /**
+     * Add a column to the table footer
+     * @param  mixed $content Footer cell content
+     * @param  string $align The text alignment ('left' or 'right')
+     * @return object LucidFrame\Console\ConsoleTable
+     */
+    public function addFooter($content = '', $align = self::ALIGN_LEFT)
+    {
+        $this->data[self::FOOTER_INDEX][] = $content;
+        $this->footerColumnAligns[self::FOOTER_INDEX][] = $align === self::ALIGN_RIGHT ? STR_PAD_LEFT : STR_PAD_RIGHT;
+
+        return $this;
+    }
+
+    /**
+     * Set footers for the columns in one-line
+     * @param  array $content Array of footer cell content
+     * @return object LucidFrame\Console\ConsoleTable
+     */
+    public function setFooters(array $content)
+    {
+        $this->data[self::FOOTER_INDEX] = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get the row of footer
+     */
+    public function getFooters()
+    {
+        return $this->data[self::FOOTER_INDEX] ?? null;
+    }
+
+    /**
      * Print the table
      * @return void
      */
@@ -230,6 +267,10 @@ class ConsoleTable
 
         $output = $this->border ? $this->getBorderLine() : '';
         foreach ($this->data as $y => $row) {
+            if ($y === self::FOOTER_INDEX) {
+                continue; // Skip footer here, we'll add it at the end
+            }
+
             if ($row === self::HR) {
                 if (!$this->allBorders) {
                     $output .= $this->getBorderLine();
@@ -240,7 +281,7 @@ class ConsoleTable
             }
 
             if ($y === self::HEADER_INDEX && count($row) < $this->maxColumnCount) {
-                $row = $row + array_fill(count($row), $this->maxColumnCount - count($row), ' ');
+                $row += array_fill(count($row), $this->maxColumnCount - count($row), ' ');
             }
 
             foreach ($row as $x => $cell) {
@@ -253,6 +294,23 @@ class ConsoleTable
             } else if ($this->allBorders) {
                 $output .= $this->getBorderLine();
             }
+        }
+
+        // Add footer if exists
+        if (isset($this->data[self::FOOTER_INDEX])) {
+            if (!$this->allBorders) {
+                $output .= $this->getBorderLine();
+            }
+
+            $row = $this->data[self::FOOTER_INDEX];
+            if (count($row) < $this->maxColumnCount) {
+                $row += array_fill(count($row), $this->maxColumnCount - count($row), ' ');
+            }
+
+            foreach ($row as $x => $cell) {
+                $output .= $this->getCellOutput($x, self::FOOTER_INDEX, $row);
+            }
+            $output .= PHP_EOL;
         }
 
         if (!$this->allBorders) {
@@ -317,14 +375,16 @@ class ConsoleTable
         }
 
         $output .= $padding; # left padding
-        
+
         // Apply column alignment
         if ($rowIndex === self::HEADER_INDEX) {
             $alignment = $this->headerColumnAligns[$rowIndex][$colIndex] ?? STR_PAD_RIGHT;
+        } elseif ($rowIndex === self::FOOTER_INDEX) {
+            $alignment = $this->footerColumnAligns[$rowIndex][$colIndex] ?? STR_PAD_RIGHT;
         } else {
             $alignment = $this->columnAligns[$colIndex] ?? STR_PAD_RIGHT;
         }
-            
+
         $output .= $this->strPadUnicode($cell, $this->getVisualWidth($colIndex, $cell), $row ? ' ' : '-', $alignment); # cell content
         $output .= $padding; # right padding
         if ($colIndex === count($row) - 1 && $this->border) {
