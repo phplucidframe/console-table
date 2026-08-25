@@ -9,14 +9,15 @@ class ConsoleTableTest extends TestCase
 {
     public function testBorderedTableDefault()
     {
-        $borderedTableDefault = '
-+----------+------+
-| Language | Year |
-+----------+------+
-| PHP      | 1994 |
-| C++      | 1983 |
-| C        | 1970 |
-+----------+------+';
+        $output = implode(PHP_EOL, array(
+            '+----------+------+',
+            '| Language | Year |',
+            '+----------+------+',
+            '| PHP      | 1994 |',
+            '| C++      | 1983 |',
+            '| C        | 1970 |',
+            '+----------+------+',
+        ));
 
         $table = new ConsoleTable();
         $table
@@ -32,21 +33,22 @@ class ConsoleTableTest extends TestCase
                 ->addColumn('C')
                 ->addColumn(1970);
 
-        $this->assertEquals(trim($borderedTableDefault), trim($table->getTable()));
+        $this->assertEquals(trim($output), trim($table->getTable()));
     }
 
     public function testBorderedTableWithHorizontalLines()
     {
-        $borderedTableWithHorizontalLines = '
-+----------+------+
-| Language | Year |
-+----------+------+
-| PHP      | 1994 |
-+----------+------+
-| C++      | 1983 |
-+----------+------+
-| C        | 1970 |
-+----------+------+';
+        $output = implode(PHP_EOL, array(
+            '+----------+------+',
+            '| Language | Year |',
+            '+----------+------+',
+            '| PHP      | 1994 |',
+            '+----------+------+',
+            '| C++      | 1983 |',
+            '+----------+------+',
+            '| C        | 1970 |',
+            '+----------+------+',
+        ));
 
         $table = new ConsoleTable();
         $table
@@ -57,21 +59,22 @@ class ConsoleTableTest extends TestCase
             ->addBorderLine()
             ->addRow(array('C', 1970));
 
-        $this->assertEquals(trim($borderedTableWithHorizontalLines), trim($table->getTable()));
+        $this->assertEquals(trim($output), trim($table->getTable()));
     }
 
     public function testBorderedTableWithHorizontalLinesUsingShowAllBorders()
     {
-        $borderedTableWithHorizontalLines = '
-+----------+------+
-| Language | Year |
-+----------+------+
-| PHP      | 1994 |
-+----------+------+
-| C++      | 1983 |
-+----------+------+
-| C        | 1970 |
-+----------+------+';
+        $output = implode(PHP_EOL, array(
+            '+----------+------+',
+            '| Language | Year |',
+            '+----------+------+',
+            '| PHP      | 1994 |',
+            '+----------+------+',
+            '| C++      | 1983 |',
+            '+----------+------+',
+            '| C        | 1970 |',
+            '+----------+------+',
+        ));
 
         $table = new ConsoleTable();
         $table
@@ -81,19 +84,20 @@ class ConsoleTableTest extends TestCase
             ->addRow(array('C', 1970))
             ->showAllBorders();
 
-        $this->assertEquals(trim($borderedTableWithHorizontalLines), trim($table->getTable()));
+        $this->assertEquals(trim($output), trim($table->getTable()));
     }
 
     public function testBorderedTableWithPaddingWidth2()
     {
-        $borderedTableWithPaddingWidth2 = '
-+------------+--------+
-|  Language  |  Year  |
-+------------+--------+
-|  PHP       |  1994  |
-|  C++       |  1983  |
-|  C         |  1970  |
-+------------+--------+';
+        $output = implode(PHP_EOL, array(
+            '+------------+--------+',
+            '|  Language  |  Year  |',
+            '+------------+--------+',
+            '|  PHP       |  1994  |',
+            '|  C++       |  1983  |',
+            '|  C         |  1970  |',
+            '+------------+--------+',
+        ));
 
         $table = new ConsoleTable();
         $table
@@ -103,19 +107,20 @@ class ConsoleTableTest extends TestCase
             ->addRow(array('C', 1970))
             ->setPadding(2);
 
-        $this->assertEquals(trim($borderedTableWithPaddingWidth2), trim($table->getTable()));
+        $this->assertEquals(trim($output), trim($table->getTable()));
     }
 
     public function testBorderedTableWithLeftMarginWidth4()
     {
-        $borderedTableWithLeftMarginWidth4 = '
-    +----------+------+
-    | Language | Year |
-    +----------+------+
-    | PHP      | 1994 |
-    | C++      | 1983 |
-    | C        | 1970 |
-    +----------+------+';
+        $output = implode(PHP_EOL, array(
+            '    +----------+------+',
+            '    | Language | Year |',
+            '    +----------+------+',
+            '    | PHP      | 1994 |',
+            '    | C++      | 1983 |',
+            '    | C        | 1970 |',
+            '    +----------+------+',
+        ));
 
         $table = new ConsoleTable();
         $table
@@ -125,17 +130,18 @@ class ConsoleTableTest extends TestCase
             ->addRow(array('C', 1970))
             ->setIndent(4);
 
-        $this->assertEquals(trim($borderedTableWithLeftMarginWidth4), trim($table->getTable()));
+        $this->assertEquals(trim($output), trim($table->getTable()));
     }
 
     public function testNonBorderedTableWithHeader()
     {
-        $nonBorderedTableWithHeader = '
- Language  Year 
-----------------
- PHP       1994 
- C++       1983 
- C         1970 ';
+        $output = implode(PHP_EOL, array(
+            ' Language  Year ',
+            '----------------',
+            ' PHP       1994 ',
+            ' C++       1983 ',
+            ' C         1970 ',
+        ));
 
         $table = new ConsoleTable();
         $table
@@ -145,15 +151,16 @@ class ConsoleTableTest extends TestCase
             ->addRow(array('C', 1970))
             ->hideBorder();
 
-        $this->assertEquals(trim($nonBorderedTableWithHeader), trim($table->getTable()));
+        $this->assertEquals(trim($output), trim($table->getTable()));
     }
 
     public function testNonBorderedTableWithoutHeader()
     {
-        $nonBorderedTableWithoutHeader = '
- PHP  1994 
- C++  1983 
- C    1970 ';
+        $output = implode(PHP_EOL, array(
+            ' PHP  1994 ',
+            ' C++  1983 ',
+            ' C    1970 ',
+        ));
 
         $table = new ConsoleTable();
         $table
@@ -162,18 +169,19 @@ class ConsoleTableTest extends TestCase
             ->addRow(array('C', 1970))
             ->hideBorder();
 
-        $this->assertEquals(trim($nonBorderedTableWithoutHeader), trim($table->getTable()));
+        $this->assertEquals(trim($output), trim($table->getTable()));
     }
 
     public function testTableWithHeaderAlignment()
     {
-        $tableWithHeaderAlignment = '
-+---+---------------------+------+
-| A |                   B | C    |
-+---+---------------------+------+
-| X |               Hello | Nice |
-| Y | Hello, how are you? |   OK |
-+---+---------------------+------+';
+        $output = implode(PHP_EOL, array(
+            '+---+---------------------+------+',
+            '| A |                   B | C    |',
+            '+---+---------------------+------+',
+            '| X |               Hello | Nice |',
+            '| Y | Hello, how are you? |   OK |',
+            '+---+---------------------+------+',
+        ));
 
         $table = new ConsoleTable();
         $table
@@ -190,20 +198,21 @@ class ConsoleTableTest extends TestCase
                 ->addColumn('OK', null, null, ConsoleTable::ALIGN_RIGHT);
 
 
-        $this->assertEquals(trim($tableWithHeaderAlignment), trim($table->getTable()));
+        $this->assertEquals(trim($output), trim($table->getTable()));
     }
 
     public function testBorderedTableWithHeaderAndFooter()
     {
-        $output = '
-+-------+-----+
-| Name  | Age |
-+-------+-----+
-| John  |  25 |
-| Jane  |  23 |
-+-------+-----+
-| Total |  48 |
-+-------+-----+';
+        $output = implode(PHP_EOL, array(
+            '+-------+-----+',
+            '| Name  | Age |',
+            '+-------+-----+',
+            '| John  |  25 |',
+            '| Jane  |  23 |',
+            '+-------+-----+',
+            '| Total |  48 |',
+            '+-------+-----+',
+        ));
 
         $table = new ConsoleTable();
         $table
@@ -223,13 +232,14 @@ class ConsoleTableTest extends TestCase
 
     public function testNonBorderedTableWithHeaderAndFooter()
     {
-        $output = '
- Name   Age 
-------------
- John   25  
- Jane   23  
-------------
- Total  48  ';
+        $output = implode(PHP_EOL, array(
+            ' Name   Age ',
+            '------------',
+            ' John   25  ',
+            ' Jane   23  ',
+            '------------',
+            ' Total  48  ',
+        ));
 
         $table = new ConsoleTable();
         $table
