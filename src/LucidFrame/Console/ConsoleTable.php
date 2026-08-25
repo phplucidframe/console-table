@@ -267,7 +267,12 @@ class ConsoleTable
         $this->calculateColumnWidth();
 
         $output = $this->border ? $this->getBorderLine() : '';
-        foreach ($this->data as $y => $row) {
+        // Header data must always be rendered first
+        $rows = isset($this->data[self::HEADER_INDEX])
+            ? array(self::HEADER_INDEX => $this->data[self::HEADER_INDEX]) + $this->data
+            : $this->data;
+
+        foreach ($rows as $y => $row) {
             if ($y === self::FOOTER_INDEX) {
                 continue; // Skip footer here, we'll add it at the end
             }

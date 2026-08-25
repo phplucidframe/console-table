@@ -287,4 +287,26 @@ class ConsoleTableTest extends TestCase
 
         $this->assertEquals(trim($output), trim($table->getTable()));
     }
+
+    public function testHeaderAndRowInDifferentOrder()
+    {
+        $output = implode(PHP_EOL, array(
+            '+----------+------+',
+            '| Language | Year |',
+            '+----------+------+',
+            '| PHP      | 1994 |',
+            '| C++      | 1983 |',
+            '| C        | 1970 |',
+            '+----------+------+',
+        ));
+
+        $table = new ConsoleTable();
+        $table
+            ->addRow(array('PHP', 1994))
+            ->addRow(array('C++', 1983))
+            ->addRow(array('C', 1970))
+            ->setHeaders(array('Language', 'Year'));
+
+        $this->assertEquals(trim($output), trim($table->getTable()));
+    }
 }
