@@ -241,4 +241,40 @@ class ConsoleTableTest extends TestCase
 
         $this->assertEquals(trim($output), trim($table->getTable()));
     }
+
+    public function testWithHeaderUsingKeys()
+    {
+        $output = implode(PHP_EOL, array(
+            '+------+-----+',
+            '| Name | Age |',
+            '+------+-----+',
+            '| John | 25  |',
+            '+------+-----+',
+        ));
+
+        $table = new ConsoleTable();
+        $table
+            ->setHeaders(array('name' => 'Name', 'age' => 'Age'))
+            ->addRow(array('John', '25'));
+
+        $this->assertEquals(trim($output), trim($table->getTable()));
+    }
+
+    public function testWithRowUsingKeys()
+    {
+        $output = implode(PHP_EOL, array(
+            '+------+-----+',
+            '| Name | Age |',
+            '+------+-----+',
+            '| John | 25  |',
+            '+------+-----+',
+        ));
+
+        $table = new ConsoleTable();
+        $table
+            ->setHeaders(array('Name', 'Age'))
+            ->addRow(array('name' => 'John', 'age' => 25));
+
+        $this->assertEquals(trim($output), trim($table->getTable()));
+    }
 }

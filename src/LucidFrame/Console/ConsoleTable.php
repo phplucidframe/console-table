@@ -72,7 +72,7 @@ class ConsoleTable
      */
     public function setHeaders(array $content)
     {
-        $this->data[self::HEADER_INDEX] = $content;
+        $this->data[self::HEADER_INDEX] = array_values($content);
 
         return $this;
     }
@@ -95,6 +95,7 @@ class ConsoleTable
         $this->rowIndex++;
 
         if (is_array($data)) {
+            $data = array_values($data);
             foreach ($data as $col => $content) {
                 $this->data[$this->rowIndex][$col] = $content;
             }
